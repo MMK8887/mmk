@@ -175,12 +175,12 @@ class MicrobiomeAIBackendTests(unittest.TestCase):
 
     def test_06_positive_feedback(self):
         """Test feedback system with positive feedback"""
-        if not self.message_ids:
+        if not hasattr(self.__class__, 'message_id_1') or not self.__class__.message_id_1:
             self.skipTest("No message IDs available for feedback test")
             
         logger.info("Testing feedback system with positive feedback...")
         payload = {
-            "message_id": self.message_ids[0],
+            "message_id": self.__class__.message_id_1,
             "message": "Hello, I need help with my gut health",
             "is_correct": True,
             "custom_response": None,
