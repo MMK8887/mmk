@@ -194,12 +194,12 @@ class MicrobiomeAIBackendTests(unittest.TestCase):
 
     def test_07_negative_feedback(self):
         """Test feedback system with negative feedback"""
-        if len(self.message_ids) < 2:
-            self.skipTest("Not enough message IDs available for feedback test")
+        if not hasattr(self.__class__, 'message_id_2') or not self.__class__.message_id_2:
+            self.skipTest("No message IDs available for feedback test")
             
         logger.info("Testing feedback system with negative feedback...")
         payload = {
-            "message_id": self.message_ids[1],
+            "message_id": self.__class__.message_id_2,
             "message": "What probiotics should I take?",
             "is_correct": False,
             "custom_response": "For someone with dairy allergies, I recommend non-dairy probiotics like kimchi, sauerkraut, or probiotic supplements that are dairy-free.",
