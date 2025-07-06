@@ -111,6 +111,9 @@ class MicrobiomeAIBackendTests(unittest.TestCase):
         self.assertIn(data["intent"], ["probiotic_info", "gut_health"])
         logger.info(f"Chat response intent: {data['intent']}")
         logger.info(f"Chat response: {data['response'][:100]}...")
+        
+        # Make the message ID available for other tests
+        MicrobiomeAIBackendTests.message_id_2 = data["id"]
 
     def test_04_chat_microbiome_diversity(self):
         """Test chat endpoint with microbiome diversity query"""
