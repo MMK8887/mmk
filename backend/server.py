@@ -11,6 +11,11 @@ from datetime import datetime
 import pandas as pd
 import json
 import io
+import sys
+
+# Add current directory to Python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from microbiome_ai import MicrobiomeAI
 
 # Load environment variables
