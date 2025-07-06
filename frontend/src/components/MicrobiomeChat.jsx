@@ -433,15 +433,15 @@ const MicrobiomeChat = () => {
             </h2>
             <div className="grid grid-cols-3 gap-4">
               <div className="text-center p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
-                <div className="text-2xl font-bold text-blue-600">{mockWearableData.sleepHours}h</div>
+                <div className="text-2xl font-bold text-blue-600">{wearableData.sleep_hours || wearableData.sleepHours}h</div>
                 <div className="text-sm text-gray-600">Sleep</div>
               </div>
               <div className="text-center p-4 bg-green-50 rounded-lg border-2 border-green-200">
-                <div className="text-2xl font-bold text-green-600">{mockWearableData.steps.toLocaleString()}</div>
+                <div className="text-2xl font-bold text-green-600">{(wearableData.steps || 0).toLocaleString()}</div>
                 <div className="text-sm text-gray-600">Steps</div>
               </div>
               <div className="text-center p-4 bg-yellow-50 rounded-lg border-2 border-yellow-200">
-                <div className="text-2xl font-bold text-yellow-600">{mockWearableData.stressScore}/10</div>
+                <div className="text-2xl font-bold text-yellow-600">{wearableData.stress_score || wearableData.stressScore}/10</div>
                 <div className="text-sm text-gray-600">Stress</div>
               </div>
             </div>
