@@ -399,18 +399,18 @@ const MicrobiomeChat = () => {
             
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div className="text-center p-4 bg-emerald-50 rounded-lg border-2 border-emerald-200">
-                <div className="text-3xl font-bold text-emerald-600">{mockMicrobiomeData.shannonIndex}</div>
+                <div className="text-3xl font-bold text-emerald-600">{microbiomeData.shannon_index}</div>
                 <div className="text-sm text-gray-600">Shannon Index</div>
               </div>
               <div className="text-center p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
-                <div className="text-3xl font-bold text-blue-600">{mockMicrobiomeData.diversityLevel}</div>
+                <div className="text-3xl font-bold text-blue-600">{microbiomeData.diversity_level}</div>
                 <div className="text-sm text-gray-600">Diversity Level</div>
               </div>
             </div>
             
             <div className="space-y-3">
               <h3 className="font-semibold text-gray-700">Microbe Abundance:</h3>
-              {Object.entries(mockMicrobiomeData.microbes).map(([microbe, abundance]) => (
+              {Object.entries(microbiomeData.microbes).map(([microbe, abundance]) => (
                 <div key={microbe} className="flex items-center justify-between p-2 bg-gray-50 rounded">
                   <span className="text-sm font-medium">{microbe}</span>
                   <div className="flex items-center gap-2">
