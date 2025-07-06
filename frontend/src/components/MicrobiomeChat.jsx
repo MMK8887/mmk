@@ -489,7 +489,7 @@ const MicrobiomeChat = () => {
               ⚠️ Health Alerts
             </h2>
             <div className="space-y-3">
-              {mockHealthInsights.warnings.map((warning, idx) => (
+              {healthInsights.warnings.map((warning, idx) => (
                 <div key={idx} className={`p-3 rounded-lg ${warning.level === 'moderate' ? 'bg-orange-50 border-orange-200' : 'bg-yellow-50 border-yellow-200'} border-2`}>
                   <div className="flex items-center gap-2">
                     <span className={`text-lg ${warning.level === 'moderate' ? 'text-orange-600' : 'text-yellow-600'}`}>
