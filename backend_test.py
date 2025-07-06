@@ -35,6 +35,10 @@ class MicrobiomeAIBackendTests(unittest.TestCase):
         logger.info(f"Using API base URL: {BASE_URL}")
         self.session = requests.Session()
         self.message_ids = []  # Store message IDs for feedback tests
+        
+    # Class variables to store message IDs between tests
+    message_id_1 = None
+    message_id_2 = None
 
     def test_01_health_check(self):
         """Test API health check endpoint"""
