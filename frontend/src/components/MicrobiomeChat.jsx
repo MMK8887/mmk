@@ -507,19 +507,19 @@ const MicrobiomeChat = () => {
               📈 Health Score
             </h2>
             <div className="text-center mb-4">
-              <div className="text-4xl font-bold text-green-600">{mockHealthInsights.overallScore}/100</div>
+              <div className="text-4xl font-bold text-green-600">{healthInsights.overallScore}/100</div>
               <div className="text-gray-600">Overall Health Score</div>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-4">
               <div 
                 className="bg-green-500 h-4 rounded-full transition-all duration-300"
-                style={{width: `${mockHealthInsights.overallScore}%`}}
+                style={{width: `${healthInsights.overallScore}%`}}
               ></div>
             </div>
             
             <div className="mt-4 space-y-2">
               <h4 className="font-medium text-sm">Key Improvements:</h4>
-              {mockHealthInsights.improvements.map((item, idx) => (
+              {healthInsights.improvements.map((item, idx) => (
                 <div key={idx} className="text-sm bg-blue-50 p-2 rounded">
                   <div className="font-medium">{item.category}</div>
                   <div className="text-gray-600">{item.improvement}</div>
