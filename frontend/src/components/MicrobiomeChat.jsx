@@ -16,13 +16,59 @@ import {
 } from '../utils/mockData';
 
 const MicrobiomeChat = () => {
-  const [messages, setMessages] = useState(mockChatHistory);
+  const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [learningMode, setLearningMode] = useState(false);
   const [pendingFeedback, setPendingFeedback] = useState(null);
   const [activeTab, setActiveTab] = useState('chat');
+  const [microbiomeData, setMicrobiomeData] = useState(mockMicrobiomeData);
+  const [wearableData, setWearableData] = useState(mockWearableData);
+  const [userProfile, setUserProfile] = useState(mockUserProfile);
+  const [healthInsights, setHealthInsights] = useState(mockHealthInsights);
+  const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
+
+  // Load real data on component mount
+  useEffect(() => {
+    loadUserData();
+  }, []);
+
+  const loadUserData = async () => {
+    const userId = 'USER_001'; // In real app, get from auth
+    setLoading(true);
+    
+    try {
+      // Load health dashboard data
+      const dashboardResponse = await axios.get(`${API}/health-dashboard/${userId}`);
+      const dashboard = dashboardResponse.data;
+      
+      if (dashboard.microbiome_analysis) {
+        setMicrobiomeData(dashboard.microbiome_analysis);
+      }
+      
+      if (dashboard.wearable_data) {
+        setWearableData(dashboard.wearable_data);
+      }
+      
+      if (dashboard.user_profile) {
+        setUserProfile(dashboard.user_profile);
+      }
+      
+      if (dashboard.learning_stats) {
+        setHealthInsights(prev => ({
+          ...prev,
+          overallScore: dashboard.learning_stats.personalization_score || prev.overallScore
+        }));
+      }
+      
+    } catch (error) {
+      console.log('Using mock data - no backend data available');
+      // Keep using mock data as fallback
+    }
+    
+    setLoading(false);
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
