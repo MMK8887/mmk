@@ -1,11 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Bot, User, ThumbsUp, ThumbsDown, Upload, BarChart3, Brain, Activity, MessageCircle, Sparkles, TrendingUp, AlertCircle, CheckCircle, Clock, Zap } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Badge } from './ui/badge';
-import { Progress } from './ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { 
   mockMicrobiomeData, 
   mockWearableData, 
