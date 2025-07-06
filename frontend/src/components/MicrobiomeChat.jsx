@@ -103,7 +103,7 @@ const MicrobiomeChat = () => {
     setIsTyping(false);
   };
 
-  const handleFeedback = (messageId, isCorrect) => {
+  const handleFeedback = async (messageId, isCorrect) => {
     setMessages(prev => 
       prev.map(msg => 
         msg.id === messageId 
@@ -115,7 +115,38 @@ const MicrobiomeChat = () => {
     
     if (!isCorrect) {
       setLearningMode(true);
-      console.log('Learning mode activated for message:', messageId);
+      
+      // Find the message that received negative feedback
+      const message = messages.find(msg => msg.id === messageId);
+      if (message) {
+        try {
+          // Submit feedback to backend
+          await axios.post(`${API}/feedback`, {
+            message_id: messageId,
+            message: message.message,
+            is_correct: false,
+            custom_response: "Please provide a better response for this query."
+          });
+          
+          console.log('Feedback submitted to learning system');
+        } catch (error) {
+          console.error('Failed to submit feedback:', error);
+        }
+      }
+    } else {
+      // Submit positive feedback
+      const message = messages.find(msg => msg.id === messageId);
+      if (message) {
+        try {
+          await axios.post(`${API}/feedback`, {
+            message_id: messageId,
+            message: message.message,
+            is_correct: true
+          });
+        } catch (error) {
+          console.error('Failed to submit positive feedback:', error);
+        }
+      }
     }
   };
 
