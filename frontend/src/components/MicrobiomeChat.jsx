@@ -43,31 +43,64 @@ const MicrobiomeChat = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = inputText;
     setInputText('');
     setIsTyping(true);
 
-    // Simulate AI processing delay
-    setTimeout(() => {
-      const aiResponse = generateMockResponse(inputText);
-      
+    try {
+      // Call real backend API
+      const response = await axios.post(`${API}/chat`, {
+        message: currentInput,
+        session_id: `session_${Date.now()}`, // Generate session ID
+        user_profile: {
+          user_id: mockUserProfile.user_id || "USER_001",
+          diet: mockUserProfile.diet,
+          allergies: mockUserProfile.allergies,
+          goal: mockUserProfile.goal
+        }
+      });
+
       const assistantMessage = {
-        id: Date.now() + 1,
-        message: inputText,
-        response: aiResponse.response,
-        timestamp: new Date().toISOString(),
-        intent: aiResponse.intent,
-        keywords: aiResponse.keywords,
-        entities: aiResponse.entities,
-        confidence: aiResponse.confidence,
-        recommendations: aiResponse.recommendations || [],
+        id: response.data.id,
+        message: currentInput,
+        response: response.data.response,
+        timestamp: response.data.timestamp,
+        intent: response.data.intent,
+        keywords: response.data.keywords,
+        entities: response.data.entities,
+        confidence: response.data.confidence,
+        recommendations: response.data.recommendations || [],
         isUser: false,
         needsFeedback: true
       };
 
       setMessages(prev => [...prev, assistantMessage]);
-      setIsTyping(false);
       setPendingFeedback(assistantMessage.id);
-    }, 1000 + Math.random() * 1000);
+
+    } catch (error) {
+      console.error('API Error:', error);
+      
+      // Fallback to mock response
+      const mockResponse = generateMockResponse(currentInput);
+      const assistantMessage = {
+        id: Date.now() + 1,
+        message: currentInput,
+        response: mockResponse.response + " (Note: Using offline mode)",
+        timestamp: new Date().toISOString(),
+        intent: mockResponse.intent,
+        keywords: mockResponse.keywords,
+        entities: mockResponse.entities,
+        confidence: mockResponse.confidence,
+        recommendations: mockResponse.recommendations || [],
+        isUser: false,
+        needsFeedback: true
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+      setPendingFeedback(assistantMessage.id);
+    }
+
+    setIsTyping(false);
   };
 
   const handleFeedback = (messageId, isCorrect) => {
