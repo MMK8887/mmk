@@ -72,6 +72,12 @@
       z-index: 40;
       padding: .38rem 0;
       border: 1px solid var(--border);
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    nav::-webkit-scrollbar {
+      display: none;
     }
     nav a {
       color: var(--text);
@@ -98,7 +104,7 @@
     .container {
       max-width: 835px;
       margin: 0 auto 1.3rem;
-      padding: 0 0.7rem;
+      padding: 0 4vw;
     }
     .section-stack {
       display: flex;
@@ -110,14 +116,13 @@
       border-radius: 14px;
       box-shadow: var(--shadow);
       border: 1.1px solid #eee7fa9c;
-      padding: 1.2rem 1.0rem 1.00rem 1.0rem;
-      margin: 0;
+      padding: 1.2rem 1.0rem;
       display: flex;
       flex-direction: column;
       gap: 0.5em;
       opacity: 0;
       transform: translateY(14px) scale(0.99);
-      transition: opacity .32s cubic-bezier(.47,.28,.33,1), transform .31s cubic-bezier(.4,.18,.2,1);
+      transition: opacity .32s, transform .31s;
     }
     .card.visible {
       opacity: 1;
@@ -132,18 +137,12 @@
       border-left: 3px solid var(--accent2);
       padding-left: 0.7em;
       text-align: left;
-      background: none;
       display: flex;
       align-items: center;
       gap:.45em;
     }
-    /* Plain skill list: clean, concise */
     .skills-section-inner {
-      padding: .1rem 0 .02rem 0;
-      background: none;
-      border-radius: 8px;
-      margin-bottom: .12em;
-      box-shadow: none;
+      padding: .1rem 0;
       display: flex;
       align-items: flex-start;
       flex-wrap: wrap;
@@ -152,7 +151,6 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.48rem;
-      margin: 0.08em 0 .05em 0;
     }
     .skill-item {
       background: #f2f1fa;
@@ -161,16 +159,9 @@
       padding: .29rem 0.88rem;
       font-size: 1rem;
       font-weight: 600;
-      border: none;
-      margin-bottom: 2px;
-      margin-right: 0.18em;
-      margin-top: 0.16em;
-      margin-bottom: 0.18em;
       box-shadow: 0 1.2px 4px #e1eaf0;
-      display: inline-block;
-      cursor: default;
     }
-    ul { padding-left: 1.05rem; margin-bottom: 0.5rem; color: #59547a;}
+    ul { padding-left: 1.05rem; color: #59547a;}
     ul li { margin-bottom: 0.29rem;}
     .project-card {
       background: #f8f4fe;
@@ -179,9 +170,7 @@
       margin-bottom: 0.76rem;
       color: #5b4592;
       font-weight: 500;
-      box-shadow: none;
       animation: fadeInUp .5s both;
-      position: relative;
       display: flex;
       flex-direction: column;
       gap:0.2em;
@@ -196,8 +185,6 @@
       gap: .32em;
     }
     .project-tags {
-      margin-top: .07em;
-      margin-bottom: .07em;
       display: flex;
       flex-wrap: wrap;
       gap: .14em;
@@ -210,7 +197,6 @@
       padding: 2px 9px;
       font-weight: 600;
       border: 1px solid #e4e8e8;
-      margin-right: 0;
     }
     .contact-info {
       font-size: .97em;
@@ -222,11 +208,11 @@
       gap: .75em;
       align-items: center;
       margin-top: .7em;
-      margin-bottom: .25em;
-      justify-content: flex-start;
+      flex-wrap: wrap;
     }
     .social-icon-link {
-      width: 27px; height: 27px;
+      width: 27px;
+      height: 27px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -249,15 +235,27 @@
     }
     @media (max-width: 700px) {
       header, .container { max-width: 99vw; }
-      .skills-section-inner { padding: .55rem 2vw 0.3rem;}
+      .skills-section-inner { padding: .55rem 2vw;}
       .card { padding: .8rem .7rem .4rem;}
       nav { max-width: 99vw;}
-      .section-stack{gap:0.7rem;}
+      .section-stack { gap: 0.7rem; }
     }
     @media (max-width: 500px) {
-      h2, .section-title { font-size: .96em; }
-      .card { padding: .49rem .14rem; }
-      .skills-section-inner { padding: 6px 4vw 2px 4vw;}
+      h2, .section-title { font-size: .92em; }
+      .card { padding: 0.6rem 0.6rem; }
+      .skills-section-inner { padding: 0.4rem 3vw; }
+      .skill-item {
+        font-size: 0.88rem;
+        padding: 0.25rem 0.7rem;
+      }
+    }
+    @media (max-width: 400px) {
+      nav { flex-wrap: wrap; gap: 0.25rem; padding: 0.5rem 0.4rem; }
+      nav a { font-size: 0.9rem; padding: 0.25rem 0.65rem; }
+      header h1 { font-size: 1.5rem; }
+      .tagline { font-size: 0.88rem; }
+      .social-icons { justify-content: center; }
+      .contact-info a { word-break: break-word; }
     }
     footer {
       background: #faf9fd;
@@ -279,6 +277,7 @@
     <h1>Manish M Kumar</h1>
     <div class="tagline">Data Science Storyteller · Machine Learning · Analytics · NLP</div>
   </header>
+
   <nav>
     <a href="#about" class="nav-link"><i class="fas fa-user icon"></i>About</a>
     <a href="#skills" class="nav-link"><i class="fas fa-laptop-code icon"></i>Skills</a>
@@ -286,7 +285,9 @@
     <a href="#projects" class="nav-link"><i class="fas fa-lightbulb icon"></i>Projects</a>
     <a href="#contact" class="nav-link"><i class="fas fa-envelope-open-text icon"></i>Contact</a>
   </nav>
+
   <div class="container section-stack">
+    <!-- About Section -->
     <div class="card" id="about">
       <div class="section-title"><i class="fas fa-user icon"></i>About Me</div>
       <p>
@@ -295,6 +296,8 @@
         <b>Driven by:</b> A love of problem-solving, storytelling with data, and delivering actionable insights in real-world projects.
       </p>
     </div>
+
+    <!-- Skills -->
     <div class="card" id="skills">
       <div class="section-title"><i class="fas fa-laptop-code icon"></i>Technical Skills</div>
       <div class="skills-section-inner">
@@ -308,6 +311,8 @@
         </div>
       </div>
     </div>
+
+    <!-- Education -->
     <div class="card" id="education">
       <div class="section-title"><i class="fas fa-graduation-cap icon"></i>Education</div>
       <ul>
@@ -315,18 +320,20 @@
         <li>Bachelor of Computer Applications, Mangalore University</li>
       </ul>
     </div>
+
+    <!-- Projects -->
     <div class="card" id="projects">
       <div class="section-title"><i class="fas fa-lightbulb icon"></i>Projects</div>
       <div class="project-card">
-        <h3><i class="fas fa-dna"></i> Gut Health AI Assistant with Microbiome Insights</h3>
+        <h3><i class="fas fa-dna"></i> Gut Health AI Assistant</h3>
         <div class="project-tags">
           <span class="tag-badge">Python</span>
           <span class="tag-badge">NLP</span>
           <span class="tag-badge">Frontend</span>
         </div>
         <ul>
-          <li>Built a personalized AI chatbot for gut microbiome analysis using Python.</li>
-          <li>Integrated self-learning intent detection via NLTK and JSON memory.</li>
+          <li>Built personalized AI chatbot for gut microbiome analysis using Python.</li>
+          <li>Integrated self-learning intent detection with NLTK and JSON memory.</li>
         </ul>
       </div>
       <div class="project-card">
@@ -337,43 +344,21 @@
           <span class="tag-badge">Seaborn</span>
         </div>
         <ul>
-          <li>Performed exploratory data analysis (EDA) on gaming data to identify trends in user ratings.</li>
+          <li>Exploratory data analysis (EDA) on gaming data to identify rating trends.</li>
           <li>Visualized insights using Seaborn and Matplotlib.</li>
         </ul>
       </div>
-      <div class="project-card">
-        <h3><i class="fas fa-brain"></i> Hateful Meme Detection using Knowledge Graphs (Kannada Dataset)</h3>
-        <div class="project-tags">
-          <span class="tag-badge">Python</span>
-          <span class="tag-badge">NLP</span>
-          <span class="tag-badge">Transformers</span>
-        </div>
-        <ul>
-          <li>Developed NLP pipeline using OCR & mBERT sentiment analysis for hateful Kannada memes.</li>
-          <li>Implemented entity linking using knowledge graphs and semantic reasoning.</li>
-        </ul>
-      </div>
-      <div class="project-card">
-        <h3><i class="fas fa-chart-bar"></i> Statistical Consultancy</h3>
-        <div class="project-tags">
-          <span class="tag-badge">Python</span>
-          <span class="tag-badge">R</span>
-          <span class="tag-badge">Jamovi</span>
-        </div>
-        <ul>
-          <li>Supported academic projects with sample size calculations, data analysis, interpretation.</li>
-          <li>Communicated results with clear reports and visualizations for non-technical audiences.</li>
-        </ul>
-      </div>
     </div>
+
+    <!-- Contact -->
     <div class="card" id="contact">
       <div class="section-title"><i class="fas fa-envelope-open-text icon"></i>Contact</div>
       <p class="contact-info">You can reach out to me anytime. Looking forward to connecting!</p>
       <div class="social-icons">
-        <a class="social-icon-link" href="mailto:manishmkumar8887@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-        <a class="social-icon-link" href="tel:+919481776485" title="Call"><i class="fas fa-phone"></i></a>
-        <a class="social-icon-link" href="https://linkedin.com/in/manish-m-kumar-2a0b0c3dmmk" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a class="social-icon-link" href="https://kaggle.com/manishmkumar" target="_blank" title="Kaggle"><i class="fab fa-kaggle"></i></a>
+        <a class="social-icon-link" href="mailto:manishmkumar8887@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a class="social-icon-link" href="tel:+919481776485"><i class="fas fa-phone"></i></a>
+        <a class="social-icon-link" href="https://linkedin.com/in/manish-m-kumar-2a0b0c3dmmk" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a class="social-icon-link" href="https://kaggle.com/manishmkumar" target="_blank"><i class="fab fa-kaggle"></i></a>
       </div>
       <div class="contact-info">
         <strong>Email:</strong> <a href="mailto:manishmkumar8887@gmail.com">manishmkumar8887@gmail.com</a><br>
@@ -381,11 +366,13 @@
       </div>
     </div>
   </div>
+
   <footer>
     <div style="text-align:center;">
       &copy; 2025 Manish M Kumar. All rights reserved.
     </div>
   </footer>
+
   <script>
     function revealCards() {
       document.querySelectorAll('.card').forEach(card => {
@@ -412,6 +399,7 @@
         }
       });
     }
+
     document.addEventListener('scroll', updateActiveNav);
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', e => {
@@ -422,6 +410,7 @@
         }
       });
     });
+
     window.addEventListener('DOMContentLoaded', () => {
       revealCards();
       updateActiveNav();
