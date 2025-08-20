@@ -38,7 +38,7 @@ MySql
 
 📧 Email: manishmkumar8887@gmail.com
 
-💼  LinkedIn: linkedin.com/in/manish-m-kumar-2a0b0c3dmmk
+💼  LinkedIn:(https://www.linkedin.com/in/manish-m-kumar-2a0b0c3dmmk)
 
 🌐 Website: https://mmkpf.netlify.app/
 
