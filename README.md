@@ -1,5 +1,4 @@
-#🌟 My Portfolio
-
+# My Portfolio
 Welcome! 👋
 #My name is MANISH M KUMAR
 This repository serves as the central hub for my portfolio, showcasing a curated collection of projects that reflect my skills, creativity, and approach to problem-solving in technology.
