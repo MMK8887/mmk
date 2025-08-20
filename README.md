@@ -14,7 +14,7 @@ Each folder in this repository represents a self-contained project with its own 
 
 🚀 How to set up and run locally
 
-🔑 Key Highlights of this Portfolio
+#🔑 Key Highlights of this Portfolio
 
 Diverse Skill Set → Projects across  data analysis, machine learning, and visualization
 
