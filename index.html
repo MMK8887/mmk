@@ -9,6 +9,7 @@
   <meta property="og:description" content="Portfolio of Manish M Kumar - Data Scientist | Turning data into insights" />
   <meta property="og:type" content="website" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
   <style>
     :root {
       --accent: #6840b6;
@@ -18,7 +19,12 @@
       --text: #29264b;
       --border: #eaeaf4;
       --shadow: 0 4px 14px 0 rgba(110, 105, 190, 0.05);
+
+      --sidebar-w: 260px;
+      --sidebar-bg: #f6f4fb;
     }
+
+    /* Base */
     body {
       margin: 0;
       font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -27,6 +33,8 @@
       min-height: 100vh;
       line-height: 1.7;
     }
+
+    /* Header (kept) */
     header {
       max-width: 840px;
       margin: 2rem auto 1.1rem;
@@ -59,48 +67,122 @@
       margin-bottom: 0.8rem;
       font-weight: 500;
     }
-    nav {
-      background: #f6f4fb;
-      border-radius: 14px;
-      margin: 0 auto 1.4rem;
-      max-width: 790px;
-      display: flex;
-      justify-content: center;
-      gap: .45rem;
-      position: sticky;
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
       top: 0;
-      z-index: 40;
-      padding: .38rem 0;
-      border: 1px solid var(--border);
-      overflow-x: auto;
-      white-space: nowrap;
-      scrollbar-width: none;
+      left: -280px; /* hidden by default on mobile */
+      width: var(--sidebar-w);
+      height: 100%;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      box-shadow: 0 0 30px rgba(0,0,0,.04);
+      z-index: 1000;
+      padding: 0.9rem 0.6rem 1rem;
+      transition: left .25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
-    nav::-webkit-scrollbar { display: none; }
-    nav a {
+    .sidebar.open { left: 0; }
+
+    .sidebar .brand {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .65rem .8rem .55rem;
+      margin: .25rem .3rem .15rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fbfaff;
+      font-weight: 800;
+      letter-spacing: .01em;
+      color: var(--accent);
+    }
+    .brand .fa-database { font-size: 1rem; }
+
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: .2rem;
+      padding: .3rem;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .sidebar a.nav-link {
       color: var(--text);
       text-decoration: none;
       font-weight: 600;
       font-size: 1.01rem;
-      margin: 0 .17rem;
-      padding: .29rem 0.92rem .20rem;
-      border-radius: 7px;
+      padding: .48rem .85rem;
+      border-radius: 10px;
       display: flex;
       align-items: center;
-      gap: .23em;
-      background: none;
-      transition: background .15s, color .14s;
+      gap: .5em;
+      border: 1px solid transparent;
+      transition: background .15s, color .14s, border-color .15s, transform .08s;
     }
-    nav a.active, nav a:hover {
+    .sidebar a.nav-link:hover {
+      background: #eef7fb;
+      color: var(--accent2);
+      border-color: #dbeafe;
+    }
+    .sidebar a.nav-link.active {
       background: var(--accent2);
       color: #fff;
+      border-color: transparent;
     }
-    nav .icon { font-size: 1em; vertical-align: middle; }
+    .sidebar .icon { font-size: 1em; }
+
+    /* Hamburger (mobile) */
+    .hamburger {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #ffffffdd;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      z-index: 1100;
+      cursor: pointer;
+      transition: transform .08s ease;
+    }
+    .hamburger:active { transform: scale(0.97); }
+    .hamburger i { font-size: 1.1rem; color: var(--accent); }
+
+    /* Overlay (mobile) */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.28);
+      z-index: 900;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    body.sidebar-open .overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Main container shifts on desktop to make room for sidebar */
+    .main {
+      transition: margin-left .25s ease;
+    }
+
     .container {
       max-width: 835px;
       margin: 0 auto 1.3rem;
       padding: 0 4vw;
     }
+
+    /* Cards & sections (unchanged) */
     .section-stack { display: flex; flex-direction: column; gap: 1.2rem;}
     .card {
       background: var(--card-bg);
@@ -227,32 +309,10 @@
     }
     @keyframes fadeInUp {
       from { opacity:0; transform: translateY(10px);}
-      to   { opacity:1; transform: none;}
+      to   { opacity:1; transform: none;}
     }
-    @media (max-width: 700px) {
-      header, .container { max-width: 99vw; }
-      .skills-section-inner { padding: .55rem 2vw;}
-      .card { padding: .8rem .7rem .4rem;}
-      nav { max-width: 99vw;}
-      .section-stack { gap: 0.7rem; }
-    }
-    @media (max-width: 500px) {
-      h2, .section-title { font-size: .92em; }
-      .card { padding: 0.6rem 0.6rem; }
-      .skills-section-inner { padding: 0.4rem 3vw; }
-      .skill-item {
-        font-size: 0.88rem;
-        padding: 0.25rem 0.7rem;
-      }
-    }
-    @media (max-width: 400px) {
-      nav { flex-wrap: wrap; gap: 0.25rem; padding: 0.5rem 0.4rem; }
-      nav a { font-size: 0.9rem; padding: 0.25rem 0.65rem; }
-      header h1 { font-size: 1.5rem; }
-      .tagline { font-size: 0.88rem; }
-      .social-icons { justify-content: center; }
-      .contact-info a { word-break: break-word; }
-    }
+
+    /* Footer (kept) */
     footer {
       background: #faf9fd;
       color: #a186c8;
@@ -265,196 +325,249 @@
       margin: 0 auto 1.17rem;
       border: 1.1px solid #efe8fe;
     }
+
+    /* Responsive */
+    @media (min-width: 900px) {
+      .sidebar { left: 0; }
+      .hamburger { display: none; }
+      .main { margin-left: var(--sidebar-w); }
+    }
+    @media (max-width: 700px) {
+      header, .container { max-width: 99vw; }
+      .skills-section-inner { padding: .55rem 2vw;}
+      .card { padding: .8rem .7rem .4rem;}
+      .section-stack { gap: 0.7rem; }
+    }
+    @media (max-width: 500px) {
+      h2, .section-title { font-size: .92em; }
+      .card { padding: 0.6rem 0.6rem; }
+      .skills-section-inner { padding: 0.4rem 3vw; }
+      .skill-item {
+        font-size: 0.88rem;
+        padding: 0.25rem 0.7rem;
+      }
+    }
+    @media (max-width: 400px) {
+      header h1 { font-size: 1.5rem; }
+      .tagline { font-size: 0.88rem; }
+      .social-icons { justify-content: center; }
+      .contact-info a { word-break: break-word; }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <img class="profile-photo" src="m.jpg" alt="Profile photo of Manish M Kumar" />
-    <h1>Manish M Kumar</h1>
-    <div class="tagline">Data Scientist | Turning Data into Decisions</div>
-  </header>
-  <nav>
-    <a href="#about" class="nav-link"><i class="fas fa-user icon"></i>About</a>
-    <a href="#skills" class="nav-link"><i class="fas fa-laptop-code icon"></i>Skills</a>
-    <a href="#education" class="nav-link"><i class="fas fa-graduation-cap icon"></i>Education</a>
-    <a href="#projects" class="nav-link"><i class="fas fa-lightbulb icon"></i>Projects</a>
-    <a href="#consultancy" class="nav-link"><i class="fas fa-chart-line icon"></i>Consultancy</a>
-    <a href="#contact" class="nav-link"><i class="fas fa-envelope-open-text icon"></i>Contact</a>
-  </nav>
-  <div class="container section-stack">
-    <!-- About Section -->
-    <div class="card" id="about">
-      <div class="section-title"><i class="fas fa-user icon"></i>About Me</div>
-      <p>
-        M.Sc Data Science student with hands-on experience in machine learning, statistical modeling, and data visualization.<br>
-        Proficient in <strong>Python, R, SAS, SQL</strong> and big data tools.<br>
-        <b>Driven by:</b> Problem-solving, storytelling with data, and delivering actionable insights in real-world projects.
-      </p>
-    </div>
-    <!-- Skills -->
-    <div class="card" id="skills">
-      <div class="section-title"><i class="fas fa-laptop-code icon"></i>Skills</div>
-      <div class="skills-section-inner">
-        <div class="skills-list">
-          <span class="skill-item">Python</span>
-          <span class="skill-item">R</span>
-          <span class="skill-item">SQL</span>
-          <span class="skill-item">Machine Learning</span>
-          <span class="skill-item">Statistical Modelling</span>
-          <span class="skill-item">NLP</span>
+  <!-- Hamburger (mobile) -->
+  <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar" aria-label="Site navigation">
+    <div class="brand"><i class="fa-solid fa-database"></i> Portfolio</div>
+    <nav>
+      <a href="#about" class="nav-link"><i class="fas fa-user icon"></i>About</a>
+      <a href="#skills" class="nav-link"><i class="fas fa-laptop-code icon"></i>Skills</a>
+      <a href="#education" class="nav-link"><i class="fas fa-graduation-cap icon"></i>Education</a>
+      <a href="#projects" class="nav-link"><i class="fas fa-lightbulb icon"></i>Projects</a>
+      <a href="#consultancy" class="nav-link"><i class="fas fa-chart-line icon"></i>Experience</a>
+      <a href="#contact" class="nav-link"><i class="fas fa-envelope-open-text icon"></i>Contact</a>
+    </nav>
+  </aside>
+
+  <!-- Overlay (mobile) -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Main content -->
+  <main class="main" id="main">
+    <header>
+      <img class="profile-photo" src="m.jpg" alt="Profile photo of Manish M Kumar" />
+      <h1>Manish M Kumar</h1>
+      <div class="tagline">Data Scientist | Turning Data into Decisions</div>
+    </header>
+
+    <div class="container section-stack">
+      <!-- About Section -->
+      <div class="card" id="about">
+        <div class="section-title"><i class="fas fa-user icon"></i>About Me</div>
+        <p>
+          M.Sc Data Science student with hands-on experience in machine learning, statistical modeling, and data visualization.<br>
+          Proficient in <strong>Python, R, SAS, SQL</strong> and big data tools.<br>
+          <b>Driven by:</b> Problem-solving, storytelling with data, and delivering actionable insights in real-world projects.
+        </p>
+      </div>
+
+      <!-- Skills -->
+      <div class="card" id="skills">
+        <div class="section-title"><i class="fas fa-laptop-code icon"></i>Skills</div>
+        <div class="skills-section-inner">
+          <div class="skills-list">
+            <span class="skill-item">Python</span>
+            <span class="skill-item">R</span>
+            <span class="skill-item">SQL</span>
+            <span class="skill-item">Machine Learning</span>
+            <span class="skill-item">Statistical Modelling</span>
+            <span class="skill-item">NLP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="card" id="education">
+        <div class="section-title"><i class="fas fa-graduation-cap icon"></i>Education</div>
+        <ul>
+          <li>M.Sc Data Science, Manipal Academy of Higher Education</li>
+          <li>Bachelor of Computer Applications, Mangalore University</li>
+        </ul>
+      </div>
+
+      <!-- Projects -->
+      <div class="card" id="projects">
+        <div class="section-title"><i class="fas fa-lightbulb icon"></i>Projects</div>
+
+        <!-- Project 1 -->
+        <div class="project-card">
+          <h3><i class="fas fa-dna"></i>
+            <a href="https://github.com/MMK8887/microbiome.git" target="_blank" style="color: inherit; text-decoration: none;">
+              Gut Health AI Assistant
+            </a>
+          </h3>
+          <div class="project-tags">
+            <span class="tag-badge">Python</span>
+            <span class="tag-badge">NLP</span>
+            <span class="tag-badge">Streamlit</span>
+          </div>
+          <a href="https://github.com/MMK8887/microbiome.git" target="_blank">
+            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Gut+Health+App+Demo" alt="Gut Health Demo Screenshot">
+          </a>
+          <ul>
+            <li>Built personalized AI chatbot for gut microbiome analysis using Python.</li>
+            <li>Integrated self-learning intent detection with NLTK and JSON memory.</li>
+          </ul>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <h3><i class="fas fa-gamepad"></i>
+            <a href="https://github.com/MMK8887/gamerating_eda.git" target="_blank" style="color: inherit; text-decoration: none;">
+              Game Rating Data Analysis
+            </a>
+          </h3>
+          <div class="project-tags">
+            <span class="tag-badge">Python</span>
+            <span class="tag-badge">Pandas</span>
+            <span class="tag-badge">Seaborn</span>
+          </div>
+          <a href="https://github.com/MMK8887/gamerating_eda.git" target="_blank">
+            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Game+Rating+Analysis+Demo" alt="Game Rating Demo Screenshot">
+          </a>
+          <ul>
+            <li>Exploratory data analysis (EDA) on gaming data to identify rating trends.</li>
+            <li>Visualized insights using Seaborn and Matplotlib.</li>
+          </ul>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+          <h3><i class="fas fa-brain"></i>
+            <a href="https://github.com/MMK8887/kannada_memes_project.git" target="_blank" style="color: inherit; text-decoration: none;">
+              Hateful Meme Detection using Knowledge Graphs
+            </a>
+          </h3>
+          <div class="project-tags">
+            <span class="tag-badge">Python</span>
+            <span class="tag-badge">NLP</span>
+            <span class="tag-badge">Transformers</span>
+          </div>
+          <a href="https://github.com/MMK8887/kannada_memes_project.git" target="_blank">
+            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Meme+Detection+Demo" alt="Meme Detection Demo Screenshot">
+          </a>
+          <ul>
+            <li>Developed an NLP pipeline using OCR and mBERT sentiment analysis to detect hateful Kannada memes.</li>
+            <li>Implemented entity linking using knowledge graphs and semantic reasoning to improve classifications.</li>
+          </ul>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card">
+          <h3><i class="fas fa-pills"></i>
+            <a href="https://github.com/MMK8887/Multi-faceted_Pharmaceutical_BI_Project.git" target="_blank" style="color: inherit; text-decoration: none;">
+              Multi-faceted Pharmaceutical BI Project
+            </a>
+          </h3>
+          <div class="project-tags">
+            <span class="tag-badge">Python</span>
+            <span class="tag-badge">ML</span>
+            <span class="tag-badge">Time Series</span>
+            <span class="tag-badge">NLP</span>
+          </div>
+          <a href="https://github.com/MMK8887/Multi-faceted_Pharmaceutical_BI_Project.git" target="_blank">
+            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Pharma+BI+Demo" alt="Pharmaceutical BI Demo Screenshot">
+          </a>
+          <ul>
+            <li>Patient risk stratification using Logistic Regression, Random Forest, and SHAP for interpretability.</li>
+            <li>Sales forecasting with SARIMA (MAPE = 3.71%) for proactive inventory planning.</li>
+            <li>Adverse event (AE) classification using TF-IDF + Logistic Regression (ROC-AUC = 0.88).</li>
+          </ul>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="project-card">
+          <h3><i class="fas fa-chart-line"></i>
+            <a href="https://github.com/MMK8887/Superstore_dashboard.git" target="_blank" style="color: inherit; text-decoration: none;">
+              Global Superstore Sales Performance Dashboard
+            </a>
+          </h3>
+          <div class="project-tags">
+            <span class="tag-badge">Power BI</span>
+            <span class="tag-badge">Data Visualization</span>
+          </div>
+          <a href="https://github.com/MMK8887/Superstore_dashboard.git" target="_blank">
+            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Superstore+Dashboard+Demo" alt="Superstore Dashboard Screenshot">
+          </a>
+          <ul>
+            <li>Interactive Power BI dashboard analyzing sales, profit, and shipping trends (2011–2014).</li>
+            <li>KPIs: 13M Sales & 1.47M Profit with detailed region-wise and category-level insights.</li>
+            <li>Identified Technology as the top-performing category; highlighted losses in South Asia region.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Experience Section -->
+      <div class="card" id="consultancy">
+        <div class="section-title"><i class="fas fa-chart-line icon"></i>Experience</div>
+        <ul>
+          <li>Supported academic projects with sample size calculations, data analysis, and interpretation using R, Python, and Jamovi.</li>
+          <li>Communicated statistical results through reports and visualizations for non-technical audiences.</li>
+        </ul>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="card" id="contact">
+        <div class="section-title"><i class="fas fa-envelope-open-text icon"></i>Contact</div>
+        <p class="contact-info">You can reach out to me anytime. Looking forward to connecting!</p>
+        <div class="social-icons">
+          <a class="social-icon-link" href="mailto:manishmkumar8887@gmail.com"><i class="fas fa-envelope"></i></a>
+          <a class="social-icon-link" href="tel:+919481776485"><i class="fas fa-phone"></i></a>
+          <a class="social-icon-link" href="https://linkedin.com/in/manish-m-kumar-2a0b0c3dmmk" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a class="social-icon-link" href="https://kaggle.com/manishmkumar" target="_blank"><i class="fab fa-kaggle"></i></a>
+	  <a class="social-icon-link" href="https://github.com/MMK8887" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+        <div class="contact-info">
+          <strong>Email:</strong> <a href="mailto:manishmkumar8887@gmail.com">manishmkumar8887@gmail.com</a><br>
+          <strong>Phone:</strong> <a href="tel:+919481776485">+91 94817 76485</a>
         </div>
       </div>
     </div>
-    <!-- Education -->
-    <div class="card" id="education">
-      <div class="section-title"><i class="fas fa-graduation-cap icon"></i>Education</div>
-      <ul>
-        <li>M.Sc Data Science, Manipal Academy of Higher Education</li>
-        <li>Bachelor of Computer Applications, Mangalore University</li>
-      </ul>
-    </div>
-<!-- Projects --> 
-<div class="card" id="projects">
-  <div class="section-title"><i class="fas fa-lightbulb icon"></i>Projects</div>
 
-  <!-- Project 1 -->
-  <div class="project-card">
-    <h3><i class="fas fa-dna"></i>
-      <a href="https://github.com/MMK8887/microbiome.git" target="_blank" style="color: inherit; text-decoration: none;">
-        Gut Health AI Assistant
-      </a>
-    </h3>
-    <div class="project-tags">
-      <span class="tag-badge">Python</span>
-      <span class="tag-badge">NLP</span>
-      <span class="tag-badge">Streamlit</span>
-    </div>
-    <a href="https://github.com/MMK8887/microbiome.git" target="_blank">
-      <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Gut+Health+App+Demo" alt="Gut Health Demo Screenshot">
-    </a>
-    <ul>
-      <li>Built personalized AI chatbot for gut microbiome analysis using Python.</li>
-      <li>Integrated self-learning intent detection with NLTK and JSON memory.</li>
-    </ul>
-  </div>
-
-  <!-- Project 2 -->
-  <div class="project-card">
-    <h3><i class="fas fa-gamepad"></i>
-      <a href="https://github.com/MMK8887/gamerating_eda.git" target="_blank" style="color: inherit; text-decoration: none;">
-        Game Rating Data Analysis
-      </a>
-    </h3>
-    <div class="project-tags">
-      <span class="tag-badge">Python</span>
-      <span class="tag-badge">Pandas</span>
-      <span class="tag-badge">Seaborn</span>
-    </div>
-    <a href="https://github.com/MMK8887/gamerating_eda.git" target="_blank">
-      <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Game+Rating+Analysis+Demo" alt="Game Rating Demo Screenshot">
-    </a>
-    <ul>
-      <li>Exploratory data analysis (EDA) on gaming data to identify rating trends.</li>
-      <li>Visualized insights using Seaborn and Matplotlib.</li>
-    </ul>
-  </div>
-
-  <!-- Project 3 -->
-  <div class="project-card">
-    <h3><i class="fas fa-brain"></i>
-      <a href="https://github.com/MMK8887/kannada_memes_project.git" target="_blank" style="color: inherit; text-decoration: none;">
-        Hateful Meme Detection using Knowledge Graphs
-      </a>
-    </h3>
-    <div class="project-tags">
-      <span class="tag-badge">Python</span>
-      <span class="tag-badge">NLP</span>
-      <span class="tag-badge">Transformers</span>
-    </div>
-    <a href="https://github.com/MMK8887/kannada_memes_project.git" target="_blank">
-      <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Meme+Detection+Demo" alt="Meme Detection Demo Screenshot">
-    </a>
-    <ul>
-      <li>Developed an NLP pipeline using OCR and mBERT sentiment analysis to detect hateful Kannada memes.</li>
-      <li>Implemented entity linking using knowledge graphs and semantic reasoning to improve classifications.</li>
-    </ul>
-  </div>
-
-  <!-- Project 4 -->
-  <div class="project-card">
-    <h3><i class="fas fa-pills"></i>
-      <a href="https://github.com/MMK8887/Multi-faceted_Pharmaceutical_BI_Project.git" target="_blank" style="color: inherit; text-decoration: none;">
-        Multi-faceted Pharmaceutical BI Project
-      </a>
-    </h3>
-    <div class="project-tags">
-      <span class="tag-badge">Python</span>
-      <span class="tag-badge">ML</span>
-      <span class="tag-badge">Time Series</span>
-      <span class="tag-badge">NLP</span>
-    </div>
-    <a href="https://github.com/MMK8887/Multi-faceted_Pharmaceutical_BI_Project.git" target="_blank">
-      <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Pharma+BI+Demo" alt="Pharmaceutical BI Demo Screenshot">
-    </a>
-    <ul>
-      <li>Patient risk stratification using Logistic Regression, Random Forest, and SHAP for interpretability.</li>
-      <li>Sales forecasting with SARIMA (MAPE = 3.71%) for proactive inventory planning.</li>
-      <li>Adverse event (AE) classification using TF-IDF + Logistic Regression (ROC-AUC = 0.88).</li>
-    </ul>
-  </div>
-
-  <!-- Project 5 -->
-  <div class="project-card">
-    <h3><i class="fas fa-chart-line"></i>
-      <a href="https://github.com/MMK8887/Superstore_dashboard.git" target="_blank" style="color: inherit; text-decoration: none;">
-        Global Superstore Sales Performance Dashboard
-      </a>
-    </h3>
-    <div class="project-tags">
-      <span class="tag-badge">Power BI</span>
-      <span class="tag-badge">Data Visualization</span>
-    </div>
-    <a href="https://github.com/MMK8887/Superstore_dashboard.git" target="_blank">
-      <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Superstore+Dashboard+Demo" alt="Superstore Dashboard Screenshot">
-    </a>
-    <ul>
-      <li>Interactive Power BI dashboard analyzing sales, profit, and shipping trends (2011–2014).</li>
-      <li>KPIs: 13M Sales & 1.47M Profit with detailed region-wise and category-level insights.</li>
-      <li>Identified Technology as the top-performing category; highlighted losses in South Asia region.</li>
-    </ul>
-  </div>
-</div>
-
-    <!-- Consultancy Section -->
-    <div class="card" id="consultancy">
-      <div class="section-title"><i class="fas fa-chart-line icon"></i>Statistical Consultancy</div>
-      <ul>
-        <li>Supported academic projects with sample size calculations, data analysis, and interpretation using R, Python, and Jamovi.</li>
-        <li>Communicated statistical results through reports and visualizations for non-technical audiences.</li>
-      </ul>
-    </div>
-    <!-- Contact Section -->
-    <div class="card" id="contact">
-      <div class="section-title"><i class="fas fa-envelope-open-text icon"></i>Contact</div>
-      <p class="contact-info">You can reach out to me anytime. Looking forward to connecting!</p>
-      <div class="social-icons">
-        <a class="social-icon-link" href="mailto:manishmkumar8887@gmail.com"><i class="fas fa-envelope"></i></a>
-        <a class="social-icon-link" href="tel:+919481776485"><i class="fas fa-phone"></i></a>
-        <a class="social-icon-link" href="https://linkedin.com/in/manish-m-kumar-2a0b0c3dmmk" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-        <a class="social-icon-link" href="https://kaggle.com/manishmkumar" target="_blank"><i class="fab fa-kaggle"></i></a>
+    <footer>
+      <div style="text-align:center;">
+        &copy; 2025 Manish M Kumar. All rights reserved.
       </div>
-      <div class="contact-info">
-        <strong>Email:</strong> <a href="mailto:manishmkumar8887@gmail.com">manishmkumar8887@gmail.com</a><br>
-        <strong>Phone:</strong> <a href="tel:+919481776485">+91 94817 76485</a>
-      </div>
-    </div>
-  </div>
-  <footer>
-    <div style="text-align:center;">
-      &copy; 2025 Manish M Kumar. All rights reserved.
-    </div>
-  </footer>
+    </footer>
+  </main>
+
   <script>
+    // Reveal-on-scroll
     function revealCards() {
       document.querySelectorAll('.card').forEach(card => {
         const rect = card.getBoundingClientRect();
@@ -462,9 +575,8 @@
         if (rect.top < windowHeight - 60) card.classList.add('visible');
       });
     }
-    document.addEventListener('scroll', revealCards);
-    window.addEventListener('load', revealCards);
 
+    // Active nav highlighting (sidebar links)
     function updateActiveNav() {
       let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
       const offset = 85;
@@ -481,18 +593,67 @@
       });
     }
 
-    document.addEventListener('scroll', updateActiveNav);
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', e => {
-        const section = document.querySelector(link.getAttribute('href'));
-        if (section) {
-          e.preventDefault();
-          section.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }
-      });
+    // Smooth scroll for sidebar links
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('.nav-link');
+      if (!link) return;
+      const section = document.querySelector(link.getAttribute('href'));
+      if (section) {
+        e.preventDefault();
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Close sidebar on mobile after clicking a link
+        if (window.matchMedia('(max-width: 899px)').matches) closeSidebar();
+      }
     });
 
+    // Sidebar helpers
+    const body = document.body;
+    const sidebar = document.getElementById('sidebar');
+    const hamburger = document.getElementById('hamburger');
+    const overlay = document.getElementById('overlay');
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      body.classList.add('sidebar-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      body.classList.remove('sidebar-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+    function toggleSidebar() {
+      if (sidebar.classList.contains('open')) closeSidebar();
+      else openSidebar();
+    }
+
+    hamburger.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSidebar();
+    });
+
+    // Keep desktop open state consistent on resize
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 900px)').matches) {
+        sidebar.classList.add('open'); // visible on desktop
+        body.classList.remove('sidebar-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      } else {
+        sidebar.classList.remove('open');
+        body.classList.remove('sidebar-open');
+      }
+    });
+
+    // Init
     window.addEventListener('DOMContentLoaded', () => {
+      revealCards();
+      updateActiveNav();
+      if (window.matchMedia('(min-width: 900px)').matches) {
+        sidebar.classList.add('open');
+      }
+    });
+    document.addEventListener('scroll', () => {
       revealCards();
       updateActiveNav();
     });
