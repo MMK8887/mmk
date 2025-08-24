@@ -9,653 +9,1053 @@
   <meta property="og:description" content="Portfolio of Manish M Kumar - Data Scientist | Turning data into insights" />
   <meta property="og:type" content="website" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --accent: #6840b6;
-      --accent2: #2293b3;
-      --bg-gradient: linear-gradient(120deg, #f6f4ff 0%, #e0e7fa 70%, #fffafb 100%);
-      --card-bg: #fdfcff;
-      --text: #29264b;
-      --border: #eaeaf4;
-      --shadow: 0 4px 14px 0 rgba(110, 105, 190, 0.05);
-
-      --sidebar-w: 260px;
-      --sidebar-bg: #f6f4fb;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #06b6d4;
+      --bg-dark: #0f0f23;
+      --bg-darker: #050511;
+      --bg-card: rgba(15, 15, 35, 0.8);
+      --bg-glass: rgba(255, 255, 255, 0.05);
+      --text-primary: #ffffff;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --border: rgba(255, 255, 255, 0.1);
+      --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      --glow: 0 0 20px rgba(99, 102, 241, 0.3);
+      --sidebar-w: 280px;
     }
 
-    /* Base */
-    body {
+    * {
       margin: 0;
-      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.7;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* Header (kept) */
-    header {
-      max-width: 840px;
-      margin: 2rem auto 1.1rem;
-      background: #fbfaff;
-      border-radius: 17px;
-      padding: 2rem 1.6rem 1.2rem;
-      box-shadow: var(--shadow);
-      border: 1.2px solid var(--border);
-      text-align: center;
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    header img.profile-photo {
-      width: 80px;
-      height: 80px;
+
+    /* Animated Background Particles */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--primary);
       border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 0.55rem;
-      border: 2px solid var(--accent);
-      box-shadow: 0 2px 6px #b39ddb16;
+      opacity: 0.3;
+      animation: float 6s ease-in-out infinite;
     }
-    header h1 {
-      margin: 0 0 0.17rem;
-      font-size: 2rem;
-      color: var(--accent);
-      font-weight: 700;
-      letter-spacing: 0.01em;
-    }
-    header .tagline {
-      color: var(--accent2);
-      font-size: 1rem;
-      margin-bottom: 0.8rem;
-      font-weight: 500;
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
     }
 
     /* Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
-      left: -280px; /* hidden by default on mobile */
+      left: -300px;
       width: var(--sidebar-w);
-      height: 100%;
-      background: var(--sidebar-bg);
+      height: 100vh;
+      background: rgba(15, 15, 35, 0.95);
+      backdrop-filter: blur(20px);
       border-right: 1px solid var(--border);
-      box-shadow: 0 0 30px rgba(0,0,0,.04);
       z-index: 1000;
-      padding: 0.9rem 0.6rem 1rem;
-      transition: left .25s ease;
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1rem;
+    }
+
+    .sidebar.open { left: 0; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--primary);
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-menu {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
     }
-    .sidebar.open { left: 0; }
 
-    .sidebar .brand {
+    .nav-link {
       display: flex;
       align-items: center;
-      gap: .6rem;
-      padding: .65rem .8rem .55rem;
-      margin: .25rem .3rem .15rem;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: #fbfaff;
-      font-weight: 800;
-      letter-spacing: .01em;
-      color: var(--accent);
-    }
-    .brand .fa-database { font-size: 1rem; }
-
-    .sidebar nav {
-      display: flex;
-      flex-direction: column;
-      gap: .2rem;
-      padding: .3rem;
-      overflow-y: auto;
-      scrollbar-width: thin;
-    }
-    .sidebar a.nav-link {
-      color: var(--text);
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      color: var(--text-secondary);
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1.01rem;
-      padding: .48rem .85rem;
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: .5em;
-      border: 1px solid transparent;
-      transition: background .15s, color .14s, border-color .15s, transform .08s;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .sidebar a.nav-link:hover {
-      background: #eef7fb;
-      color: var(--accent2);
-      border-color: #dbeafe;
-    }
-    .sidebar a.nav-link.active {
-      background: var(--accent2);
-      color: #fff;
-      border-color: transparent;
-    }
-    .sidebar .icon { font-size: 1em; }
 
-    /* Hamburger (mobile) */
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .nav-link:hover::before {
+      left: 100%;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      background: var(--bg-glass);
+      border-color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .nav-link.active {
+      color: var(--text-primary);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      box-shadow: var(--glow);
+    }
+
+    /* Hamburger */
     .hamburger {
       position: fixed;
-      top: 12px;
-      left: 12px;
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
+      top: 1.5rem;
+      left: 1.5rem;
+      width: 50px;
+      height: 50px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--border);
-      background: #ffffffdd;
-      display: inline-flex;
+      border-radius: 12px;
+      display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: var(--shadow);
-      z-index: 1100;
       cursor: pointer;
-      transition: transform .08s ease;
+      z-index: 1100;
+      transition: all 0.3s ease;
     }
-    .hamburger:active { transform: scale(0.97); }
-    .hamburger i { font-size: 1.1rem; color: var(--accent); }
 
-    /* Overlay (mobile) */
+    .hamburger:hover {
+      background: var(--primary);
+      box-shadow: var(--glow);
+      transform: scale(1.05);
+    }
+
+    .hamburger i {
+      color: var(--text-primary);
+      font-size: 1.25rem;
+    }
+
+    /* Overlay */
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.28);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
       z-index: 900;
       opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s ease;
-    }
-    body.sidebar-open .overlay {
-      opacity: 1;
-      pointer-events: auto;
+      visibility: hidden;
+      transition: all 0.3s ease;
     }
 
-    /* Main container shifts on desktop to make room for sidebar */
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Main Content */
     .main {
-      transition: margin-left .25s ease;
+      transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 835px;
-      margin: 0 auto 1.3rem;
-      padding: 0 4vw;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
     }
 
-    /* Cards & sections (unchanged) */
-    .section-stack { display: flex; flex-direction: column; gap: 1.2rem;}
-    .card {
-      background: var(--card-bg);
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-      border: 1.1px solid #eee7fa9c;
-      padding: 1.2rem 1.0rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5em;
-      opacity: 0;
-      transform: translateY(14px) scale(0.99);
-      transition: opacity .32s, transform .31s;
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 4rem 0 2rem;
+      position: relative;
     }
-    .card.visible { opacity: 1; transform: none;}
-    .section-title {
-      font-size: 1.13em;
-      color: var(--accent);
-      font-weight: 700;
-      letter-spacing: .01em;
-      margin-bottom: 0.55rem;
-      border-left: 3px solid var(--accent2);
-      padding-left: 0.7em;
-      text-align: left;
-      display: flex;
-      align-items: center;
-      gap:.45em;
+
+    .profile-image {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      margin: 0 auto 2rem;
+      position: relative;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 4px;
+      animation: profileGlow 3s ease-in-out infinite alternate;
     }
-    .skills-section-inner {
-      padding: .1rem 0;
-      display: flex;
-      align-items: flex-start;
-      flex-wrap: wrap;
+
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--bg-dark);
     }
-    .skills-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.48rem;
+
+    @keyframes profileGlow {
+      0% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+      100% { box-shadow: 0 0 30px rgba(236, 72, 153, 0.5); }
     }
-    .skill-item {
-      background: #f2f1fa;
-      color: #563ca3;
-      border-radius: 7px;
-      padding: .29rem 0.88rem;
-      font-size: 1rem;
-      font-weight: 600;
-      box-shadow: 0 1.2px 4px #e1eaf0;
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textShimmer 3s ease-in-out infinite alternate;
     }
-    ul { padding-left: 1.05rem; color: #59547a;}
-    ul li { margin-bottom: 0.29rem;}
-    .project-card {
-      background: #f8f4fe;
-      border-radius: 8px;
-      padding: .63rem .7rem 0.4rem;
-      margin-bottom: 0.76rem;
-      color: #5b4592;
+
+    @keyframes textShimmer {
+      0% { filter: brightness(1); }
+      100% { filter: brightness(1.2); }
+    }
+
+    .hero .tagline {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
       font-weight: 500;
-      animation: fadeInUp .5s both;
-      display: flex;
-      flex-direction: column;
-      gap:0.2em;
     }
-    .project-card h3 {
-      margin: 0 0 .12em;
-      font-size: .98em;
-      color: var(--accent);
-      font-weight: 700;
+
+    .typing-effect {
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 3s steps(40, end);
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.8s ease;
+    }
+
+    .card:hover::before {
+      left: 100%;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow), var(--glow);
+      border-color: var(--primary);
+    }
+
+    .section-title {
       display: flex;
       align-items: center;
-      gap: .32em;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
     }
+
+    .section-title i {
+      color: var(--primary);
+      font-size: 1.25rem;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .skill-item {
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 0.75rem;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .skill-item:hover {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: var(--glow);
+    }
+
+    /* Project Cards */
+    .project-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow);
+    }
+
+    .project-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .project-title span {
+      color: inherit;
+      text-decoration: none;
+      cursor: default;
+    }
+
     .project-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: .14em;
-    }
-    .tag-badge {
-      background: #e2ecfa;
-      color: #6840b6;
-      border-radius: 8px;
-      font-size: .81em;
-      padding: 2px 9px;
-      font-weight: 600;
-      border: 1px solid #e4e8e8;
-    }
-    .project-thumbnail {
-      width: 100%;
-      border-radius: 8px;
-      margin-top: 0.5rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      transition: transform 0.3s;
-    }
-    .project-thumbnail:hover { transform: scale(1.025);}
-    .contact-info {
-      font-size: .97em;
-      margin-top: .5rem;
-      color: #413672;
-    }
-    .social-icons {
-      display: flex;
-      gap: .75em;
-      align-items: center;
-      margin-top: .7em;
-      flex-wrap: wrap;
-    }
-    .social-icon-link {
-      width: 27px;
-      height: 27px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: #ede8fa;
-      transition: background .15s, box-shadow .15s;
-      font-size: 1.05em;
-      color: var(--accent2);
-      border: 1px solid #dbeafe;
-      text-decoration: none;
-    }
-    .social-icon-link:hover {
-      background: var(--accent2);
-      color: #fff;
-      box-shadow: 0 2px 10px #dbeafe2e;
-    }
-    @keyframes fadeInUp {
-      from { opacity:0; transform: translateY(10px);}
-      to   { opacity:1; transform: none;}
+      gap: 0.5rem;
+      margin-bottom: 1rem;
     }
 
-    /* Footer (kept) */
-    footer {
-      background: #faf9fd;
-      color: #a186c8;
-      font-weight: 600;
+    .tag {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--text-primary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* Project Action Buttons */
+    .project-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .project-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .project-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .project-btn.demo-btn:hover {
+      background: var(--secondary);
+      border-color: var(--secondary);
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+
+    .project-btn i {
+      font-size: 0.85rem;
+    }
+
+    /* Social Icons */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      text-align: center;
-      max-width: 835px;
-      font-size: 1.01rem;
-      padding: 0.88rem 0 .82rem 0;
-      margin: 0 auto 1.17rem;
-      border: 1.1px solid #efe8fe;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: var(--primary);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.4s ease;
+      z-index: -1;
+    }
+
+    .social-link:hover::before {
+      width: 100%;
+      height: 100%;
+    }
+
+    .social-link:hover {
+      color: var(--text-primary);
+      transform: translateY(-3px);
+      box-shadow: var(--glow);
     }
 
     /* Responsive */
-    @media (min-width: 900px) {
+    @media (min-width: 1024px) {
       .sidebar { left: 0; }
       .hamburger { display: none; }
       .main { margin-left: var(--sidebar-w); }
     }
-    @media (max-width: 700px) {
-      header, .container { max-width: 99vw; }
-      .skills-section-inner { padding: .55rem 2vw;}
-      .card { padding: .8rem .7rem .4rem;}
-      .section-stack { gap: 0.7rem; }
+
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      .hero { padding: 3rem 0 1rem; }
+      .card { padding: 1.5rem; }
+      .skills-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+      .social-grid { grid-template-columns: repeat(5, 1fr); }
+      .project-actions { justify-content: center; }
     }
-    @media (max-width: 500px) {
-      h2, .section-title { font-size: .92em; }
-      .card { padding: 0.6rem 0.6rem; }
-      .skills-section-inner { padding: 0.4rem 3vw; }
-      .skill-item {
-        font-size: 0.88rem;
-        padding: 0.25rem 0.7rem;
+
+    /* Scroll Progress Bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      z-index: 9999;
+      transition: width 0.1s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
-    @media (max-width: 400px) {
-      header h1 { font-size: 1.5rem; }
-      .tagline { font-size: 0.88rem; }
-      .social-icons { justify-content: center; }
-      .contact-info a { word-break: break-word; }
+
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-darker);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
     }
   </style>
 </head>
 <body>
-  <!-- Hamburger (mobile) -->
-  <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress"></div>
+
+  <!-- Background Animation -->
+  <div class="bg-animation" id="bgAnimation"></div>
+
+  <!-- Hamburger Menu -->
+  <button class="hamburger" id="hamburger">
     <i class="fas fa-bars"></i>
   </button>
 
   <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar" aria-label="Site navigation">
-    <div class="brand"><i class="fa-solid fa-database"></i> Portfolio</div>
-    <nav>
-      <a href="#about" class="nav-link"><i class="fas fa-user icon"></i>About</a>
-      <a href="#skills" class="nav-link"><i class="fas fa-laptop-code icon"></i>Skills</a>
-      <a href="#education" class="nav-link"><i class="fas fa-graduation-cap icon"></i>Education</a>
-      <a href="#projects" class="nav-link"><i class="fas fa-lightbulb icon"></i>Projects</a>
-      <a href="#consultancy" class="nav-link"><i class="fas fa-chart-line icon"></i>Experience</a>
-      <a href="#contact" class="nav-link"><i class="fas fa-envelope-open-text icon"></i>Contact</a>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <i class="fas fa-chart-line"></i>
+      Portfolio
+    </div>
+    <nav class="nav-menu">
+      <a href="#hero" class="nav-link active">
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+      <a href="#about" class="nav-link">
+        <i class="fas fa-user"></i>
+        About
+      </a>
+      <a href="#skills" class="nav-link">
+        <i class="fas fa-laptop-code"></i>
+        Skills
+      </a>
+      <a href="#education" class="nav-link">
+        <i class="fas fa-graduation-cap"></i>
+        Education
+      </a>
+      <a href="#projects" class="nav-link">
+        <i class="fas fa-project-diagram"></i>
+        Projects
+      </a>
+      <a href="#experience" class="nav-link">
+        <i class="fas fa-briefcase"></i>
+        Experience
+      </a>
+      <a href="#contact" class="nav-link">
+        <i class="fas fa-envelope"></i>
+        Contact
+      </a>
     </nav>
   </aside>
 
-  <!-- Overlay (mobile) -->
+  <!-- Overlay -->
   <div class="overlay" id="overlay"></div>
 
-  <!-- Main content -->
-  <main class="main" id="main">
-    <header>
-      <img class="profile-photo" src="m.jpg" alt="Profile photo of Manish M Kumar" />
-      <h1>Manish M Kumar</h1>
-      <div class="tagline">Data Scientist | Turning Data into Decisions</div>
-    </header>
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      <!-- Hero Section -->
+      <section id="hero" class="hero">
+        <div class="profile-image">
+          <img src="m.jpg" alt="Manish M Kumar" />
+        </div>
+        <h1>Manish M Kumar</h1>
+        <p class="tagline typing-effect">Data Scientist | Turning Data into Decisions</p>
+      </section>
 
-    <div class="container section-stack">
       <!-- About Section -->
-      <div class="card" id="about">
-        <div class="section-title"><i class="fas fa-user icon"></i>About Me</div>
-        <p>
-          M.Sc Data Science student with hands-on experience in machine learning, statistical modeling, and data visualization.<br>
-          Proficient in <strong>Python, R, SAS, SQL</strong> and big data tools.<br>
-          <b>Driven by:</b> Problem-solving, storytelling with data, and delivering actionable insights in real-world projects.
+      <section id="about" class="card">
+        <h2 class="section-title">
+          <i class="fas fa-user"></i>
+          About Me
+        </h2>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);">
+          M.Sc Data Science student with hands-on experience in machine learning, statistical modeling, and data visualization. 
+          Proficient in <strong style="color: var(--primary);">Python, R, SAS, SQL</strong> and big data tools.
         </p>
-      </div>
+        <br>
+        <p style="color: var(--text-secondary);">
+          <strong style="color: var(--accent);">Driven by:</strong> Problem-solving, storytelling with data, and delivering actionable insights in real-world projects.
+        </p>
+      </section>
 
-      <!-- Skills -->
-      <div class="card" id="skills">
-        <div class="section-title"><i class="fas fa-laptop-code icon"></i>Skills</div>
-        <div class="skills-section-inner">
-          <div class="skills-list">
-            <span class="skill-item">Python</span>
-            <span class="skill-item">R</span>
-            <span class="skill-item">SQL</span>
-            <span class="skill-item">Machine Learning</span>
-            <span class="skill-item">Statistical Modelling</span>
-            <span class="skill-item">NLP</span>
-          </div>
+      <!-- Skills Section -->
+      <section id="skills" class="card">
+        <h2 class="section-title">
+          <i class="fas fa-laptop-code"></i>
+          Skills
+        </h2>
+        <div class="skills-grid">
+          <div class="skill-item">Python</div>
+          <div class="skill-item">R</div>
+          <div class="skill-item">SQL</div>
+          <div class="skill-item">Machine Learning</div>
+          <div class="skill-item">Statistical Modeling</div>
+          <div class="skill-item">NLP</div>
+          <div class="skill-item">Power BI</div>
+          <div class="skill-item">Time Series</div>
         </div>
-      </div>
+      </section>
 
-      <!-- Education -->
-      <div class="card" id="education">
-        <div class="section-title"><i class="fas fa-graduation-cap icon"></i>Education</div>
-        <ul>
-          <li>M.Sc Data Science, Manipal Academy of Higher Education</li>
-          <li>Bachelor of Computer Applications, Mangalore University</li>
-        </ul>
-      </div>
+      <!-- Education Section -->
+      <section id="education" class="card">
+        <h2 class="section-title">
+          <i class="fas fa-graduation-cap"></i>
+          Education
+        </h2>
+        <div style="color: var(--text-secondary); line-height: 2;">
+          <p><strong style="color: var(--primary);">M.Sc Data Science</strong><br>
+          Manipal Academy of Higher Education</p>
+          <br>
+          <p><strong style="color: var(--primary);">Bachelor of Computer Applications</strong><br>
+          Mangalore University</p>
+        </div>
+      </section>
 
-      <!-- Projects -->
-      <div class="card" id="projects">
-        <div class="section-title"><i class="fas fa-lightbulb icon"></i>Projects</div>
+      <!-- Projects Section -->
+      <section id="projects" class="card">
+        <h2 class="section-title">
+          <i class="fas fa-project-diagram"></i>
+          Featured Projects
+        </h2>
 
-        <!-- Project 1 -->
         <div class="project-card">
-          <h3><i class="fas fa-dna"></i>
-            <a href="https://github.com/MMK8887/microbiome.git" target="_blank" style="color: inherit; text-decoration: none;">
-              Gut Health AI Assistant
-            </a>
+          <h3 class="project-title">
+            <i class="fas fa-dna"></i>
+            <span>Gut Health AI Assistant</span>
           </h3>
           <div class="project-tags">
-            <span class="tag-badge">Python</span>
-            <span class="tag-badge">NLP</span>
-            <span class="tag-badge">Streamlit</span>
+            <span class="tag">Python</span>
+            <span class="tag">NLP</span>
+            <span class="tag">Streamlit</span>
           </div>
-          <a href="https://github.com/MMK8887/microbiome.git" target="_blank">
-            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Gut+Health+App+Demo" alt="Gut Health Demo Screenshot">
-          </a>
-          <ul>
-            <li>Built personalized AI chatbot for gut microbiome analysis using Python.</li>
-            <li>Integrated self-learning intent detection with NLTK and JSON memory.</li>
-          </ul>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+            Built personalized AI chatbot for gut microbiome analysis using Python. Integrated self-learning intent detection with NLTK and JSON memory.
+          </p>
+          <div class="project-actions">
+            <a href="https://gutmicrobiomeai.streamlit.app/" target="_blank" class="project-btn demo-btn">
+              <i class="fas fa-external-link-alt"></i>
+              View Demo
+            </a>
+            <a href="https://github.com/MMK8887/microbiome.git" target="_blank" class="project-btn">
+              <i class="fab fa-github"></i>
+              View Project
+            </a>
+          </div>
         </div>
 
-        <!-- Project 2 -->
         <div class="project-card">
-          <h3><i class="fas fa-gamepad"></i>
-            <a href="https://github.com/MMK8887/gamerating_eda.git" target="_blank" style="color: inherit; text-decoration: none;">
-              Game Rating Data Analysis
-            </a>
+          <h3 class="project-title">
+            <i class="fas fa-brain"></i>
+            <span>Hateful Meme Detection using Knowledge Graphs</span>
           </h3>
           <div class="project-tags">
-            <span class="tag-badge">Python</span>
-            <span class="tag-badge">Pandas</span>
-            <span class="tag-badge">Seaborn</span>
+            <span class="tag">Python</span>
+            <span class="tag">NLP</span>
+            <span class="tag">Transformers</span>
           </div>
-          <a href="https://github.com/MMK8887/gamerating_eda.git" target="_blank">
-            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Game+Rating+Analysis+Demo" alt="Game Rating Demo Screenshot">
-          </a>
-          <ul>
-            <li>Exploratory data analysis (EDA) on gaming data to identify rating trends.</li>
-            <li>Visualized insights using Seaborn and Matplotlib.</li>
-          </ul>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+            Developed an NLP pipeline using OCR and mBERT sentiment analysis to detect hateful Kannada memes. 
+            Implemented entity linking using knowledge graphs and semantic reasoning to improve classifications.
+          </p>
+          <div class="project-actions">
+            <a href="https://github.com/MMK8887/kannada_memes_project.git" target="_blank" class="project-btn">
+              <i class="fab fa-github"></i>
+              View Project
+            </a>
+          </div>
         </div>
 
-        <!-- Project 3 -->
         <div class="project-card">
-          <h3><i class="fas fa-brain"></i>
-            <a href="https://github.com/MMK8887/kannada_memes_project.git" target="_blank" style="color: inherit; text-decoration: none;">
-              Hateful Meme Detection using Knowledge Graphs
-            </a>
+          <h3 class="project-title">
+            <i class="fas fa-pills"></i>
+            <span>Multi-faceted Pharmaceutical BI Project</span>
           </h3>
           <div class="project-tags">
-            <span class="tag-badge">Python</span>
-            <span class="tag-badge">NLP</span>
-            <span class="tag-badge">Transformers</span>
+            <span class="tag">Python</span>
+            <span class="tag">ML</span>
+            <span class="tag">Time Series</span>
+            <span class="tag">NLP</span>
           </div>
-          <a href="https://github.com/MMK8887/kannada_memes_project.git" target="_blank">
-            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Meme+Detection+Demo" alt="Meme Detection Demo Screenshot">
-          </a>
-          <ul>
-            <li>Developed an NLP pipeline using OCR and mBERT sentiment analysis to detect hateful Kannada memes.</li>
-            <li>Implemented entity linking using knowledge graphs and semantic reasoning to improve classifications.</li>
-          </ul>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+            Patient risk stratification using Logistic Regression, Random Forest, and SHAP for interpretability. 
+            Sales forecasting with SARIMA (MAPE = 3.71%) for proactive inventory planning. 
+            Adverse event classification using TF-IDF + Logistic Regression (ROC-AUC = 0.88).
+          </p>
+          <div class="project-actions">
+            <a href="https://github.com/MMK8887/Multi-faceted_Pharmaceutical_BI_Project.git" target="_blank" class="project-btn">
+              <i class="fab fa-github"></i>
+              View Project
+            </a>
+          </div>
         </div>
 
-        <!-- Project 4 -->
         <div class="project-card">
-          <h3><i class="fas fa-pills"></i>
-            <a href="https://github.com/MMK8887/Multi-faceted_Pharmaceutical_BI_Project.git" target="_blank" style="color: inherit; text-decoration: none;">
-              Multi-faceted Pharmaceutical BI Project
-            </a>
+          <h3 class="project-title">
+            <i class="fas fa-chart-line"></i>
+            <span>Global Superstore Sales Performance Dashboard</span>
           </h3>
           <div class="project-tags">
-            <span class="tag-badge">Python</span>
-            <span class="tag-badge">ML</span>
-            <span class="tag-badge">Time Series</span>
-            <span class="tag-badge">NLP</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">Data Visualization</span>
           </div>
-          <a href="https://github.com/MMK8887/Multi-faceted_Pharmaceutical_BI_Project.git" target="_blank">
-            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Pharma+BI+Demo" alt="Pharmaceutical BI Demo Screenshot">
-          </a>
-          <ul>
-            <li>Patient risk stratification using Logistic Regression, Random Forest, and SHAP for interpretability.</li>
-            <li>Sales forecasting with SARIMA (MAPE = 3.71%) for proactive inventory planning.</li>
-            <li>Adverse event (AE) classification using TF-IDF + Logistic Regression (ROC-AUC = 0.88).</li>
-          </ul>
-        </div>
-
-        <!-- Project 5 -->
-        <div class="project-card">
-          <h3><i class="fas fa-chart-line"></i>
-            <a href="https://github.com/MMK8887/Superstore_dashboard.git" target="_blank" style="color: inherit; text-decoration: none;">
-              Global Superstore Sales Performance Dashboard
+          <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+            Interactive Power BI dashboard analyzing sales, profit, and shipping trends (2011–2014). 
+            KPIs: 13M Sales & 1.47M Profit with detailed region-wise and category-level insights.
+          </p>
+          <div class="project-actions">
+            <a href="https://github.com/MMK8887/Superstore_dashboard.git" target="_blank" class="project-btn">
+              <i class="fab fa-github"></i>
+              View Project
             </a>
-          </h3>
-          <div class="project-tags">
-            <span class="tag-badge">Power BI</span>
-            <span class="tag-badge">Data Visualization</span>
           </div>
-          <a href="https://github.com/MMK8887/Superstore_dashboard.git" target="_blank">
-            <img class="project-thumbnail" src="https://via.placeholder.com/800x400.png?text=Superstore+Dashboard+Demo" alt="Superstore Dashboard Screenshot">
-          </a>
-          <ul>
-            <li>Interactive Power BI dashboard analyzing sales, profit, and shipping trends (2011–2014).</li>
-            <li>KPIs: 13M Sales & 1.47M Profit with detailed region-wise and category-level insights.</li>
-            <li>Identified Technology as the top-performing category; highlighted losses in South Asia region.</li>
-          </ul>
         </div>
-      </div>
+      </section>
 
       <!-- Experience Section -->
-      <div class="card" id="consultancy">
-        <div class="section-title"><i class="fas fa-chart-line icon"></i>Experience</div>
-        <ul>
-          <li>Supported academic projects with sample size calculations, data analysis, and interpretation using R, Python, and Jamovi.</li>
-          <li>Communicated statistical results through reports and visualizations for non-technical audiences.</li>
-        </ul>
-      </div>
+      <section id="experience" class="card">
+        <h2 class="section-title">
+          <i class="fas fa-briefcase"></i>
+          Experience
+        </h2>
+        <div style="color: var(--text-secondary); line-height: 1.8;">
+          <p>• Supported academic projects with sample size calculations, data analysis, and interpretation using R, Python, and Jamovi.</p>
+          <br>
+          <p>• Communicated statistical results through reports and visualizations for non-technical audiences.</p>
+        </div>
+      </section>
 
       <!-- Contact Section -->
-      <div class="card" id="contact">
-        <div class="section-title"><i class="fas fa-envelope-open-text icon"></i>Contact</div>
-        <p class="contact-info">You can reach out to me anytime. Looking forward to connecting!</p>
-        <div class="social-icons">
-          <a class="social-icon-link" href="mailto:manishmkumar8887@gmail.com"><i class="fas fa-envelope"></i></a>
-          <a class="social-icon-link" href="tel:+919481776485"><i class="fas fa-phone"></i></a>
-          <a class="social-icon-link" href="https://linkedin.com/in/manish-m-kumar-2a0b0c3dmmk" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-          <a class="social-icon-link" href="https://kaggle.com/manishmkumar" target="_blank"><i class="fab fa-kaggle"></i></a>
-	  <a class="social-icon-link" href="https://github.com/MMK8887" target="_blank"><i class="fab fa-github"></i></a>
+      <section id="contact" class="card">
+        <h2 class="section-title">
+          <i class="fas fa-envelope"></i>
+          Get In Touch
+        </h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 1.1rem;">
+          Let's connect and discuss how data can drive your next big decision!
+        </p>
+        
+        <div class="social-grid">
+          <a href="mailto:manishmkumar8887@gmail.com" class="social-link" title="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+          <a href="tel:+919481776485" class="social-link" title="Phone">
+            <i class="fas fa-phone"></i>
+          </a>
+          <a href="https://linkedin.com/in/manish-m-kumar-2a0b0c3dmmk" class="social-link" title="LinkedIn" target="_blank">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://github.com/MMK8887" class="social-link" title="GitHub" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://kaggle.com/manishmkumar" class="social-link" title="Kaggle" target="_blank">
+            <i class="fab fa-kaggle"></i>
+          </a>
         </div>
-        <div class="contact-info">
-          <strong>Email:</strong> <a href="mailto:manishmkumar8887@gmail.com">manishmkumar8887@gmail.com</a><br>
-          <strong>Phone:</strong> <a href="tel:+919481776485">+91 94817 76485</a>
-        </div>
-      </div>
-    </div>
 
-    <footer>
-      <div style="text-align:center;">
-        &copy; 2025 Manish M Kumar. All rights reserved.
-      </div>
-    </footer>
+        <div style="margin-top: 2rem; color: var(--text-muted); text-align: center;">
+          <p><strong>Email:</strong> <a href="mailto:manishmkumar8887@gmail.com" style="color: var(--accent); text-decoration: none;">manishmkumar8887@gmail.com</a></p>
+          <p><strong>Phone:</strong> <a href="tel:+919481776485" style="color: var(--accent); text-decoration: none;">+91 94817 76485</a></p>
+        </div>
+      </section>
+    </div>
   </main>
 
   <script>
-    // Reveal-on-scroll
-    function revealCards() {
-      document.querySelectorAll('.card').forEach(card => {
-        const rect = card.getBoundingClientRect();
-        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-        if (rect.top < windowHeight - 60) card.classList.add('visible');
-      });
+    // Create animated background particles
+    function createParticles() {
+      const bgAnimation = document.getElementById('bgAnimation');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        bgAnimation.appendChild(particle);
+      }
     }
 
-    // Active nav highlighting (sidebar links)
-    function updateActiveNav() {
-      let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
-      const offset = 85;
-      document.querySelectorAll('.nav-link').forEach(link => {
-        const section = document.querySelector(link.getAttribute('href'));
-        if (section) {
-          const top = section.offsetTop - offset;
-          const bottom = top + section.offsetHeight;
-          if (scrollPos >= top && scrollPos < bottom) {
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-          }
+    // Scroll progress bar
+    function updateScrollProgress() {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      document.querySelector('.scroll-progress').style.width = progress + '%';
+    }
+
+    // Reveal cards on scroll
+    function revealCards() {
+      const cards = document.querySelectorAll('.card');
+      const triggerBottom = window.innerHeight * 0.8;
+      
+      cards.forEach(card => {
+        const cardTop = card.getBoundingClientRect().top;
+        if (cardTop < triggerBottom) {
+          card.classList.add('visible');
         }
       });
     }
 
-    // Smooth scroll for sidebar links
-    document.addEventListener('click', (e) => {
-      const link = e.target.closest('.nav-link');
-      if (!link) return;
-      const section = document.querySelector(link.getAttribute('href'));
-      if (section) {
-        e.preventDefault();
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Close sidebar on mobile after clicking a link
-        if (window.matchMedia('(max-width: 899px)').matches) closeSidebar();
-      }
-    });
-
-    // Sidebar helpers
-    const body = document.body;
-    const sidebar = document.getElementById('sidebar');
-    const hamburger = document.getElementById('hamburger');
-    const overlay = document.getElementById('overlay');
-
-    function openSidebar() {
-      sidebar.classList.add('open');
-      body.classList.add('sidebar-open');
-      hamburger.setAttribute('aria-expanded', 'true');
+    // Update active navigation
+    function updateActiveNav() {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      let currentSection = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.offsetHeight;
+        const scrollPos = window.pageYOffset;
+        
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
     }
+
+    // Sidebar functionality
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+    }
+    
     function closeSidebar() {
       sidebar.classList.remove('open');
-      body.classList.remove('sidebar-open');
-      hamburger.setAttribute('aria-expanded', 'false');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
     }
-    function toggleSidebar() {
-      if (sidebar.classList.contains('open')) closeSidebar();
-      else openSidebar();
-    }
-
+    
     hamburger.addEventListener('click', toggleSidebar);
     overlay.addEventListener('click', closeSidebar);
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeSidebar();
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+          targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          
+          // Close sidebar on mobile after navigation
+          if (window.innerWidth < 1024) {
+            closeSidebar();
+          }
+        }
+      });
     });
-
-    // Keep desktop open state consistent on resize
+    
+    // Typing effect for tagline
+    function typeWriter(element, text, speed = 100) {
+      let i = 0;
+      element.innerHTML = '';
+      
+      function type() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+    
+    // Skill items hover effect with random colors
+    function addSkillHoverEffects() {
+      const skillItems = document.querySelectorAll('.skill-item');
+      const colors = ['var(--primary)', 'var(--secondary)', 'var(--accent)'];
+      
+      skillItems.forEach(skill => {
+        skill.addEventListener('mouseenter', () => {
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          skill.style.setProperty('--hover-color', randomColor);
+          skill.style.background = `linear-gradient(135deg, ${randomColor}, ${randomColor}dd)`;
+        });
+        
+        skill.addEventListener('mouseleave', () => {
+          skill.style.background = 'var(--bg-glass)';
+        });
+      });
+    }
+    
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      revealCards();
+      updateActiveNav();
+      addSkillHoverEffects();
+      
+      // Initialize typing effect
+      const taglineElement = document.querySelector('.typing-effect');
+      if (taglineElement) {
+        setTimeout(() => {
+          typeWriter(taglineElement, 'Data Scientist | Turning Data into Decisions', 80);
+        }, 1000);
+      }
+      
+      // Show hero section with animation
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        heroSection.classList.add('fade-in-up');
+      }
+    });
+    
+    // Event listeners
+    window.addEventListener('scroll', () => {
+      updateScrollProgress();
+      revealCards();
+      updateActiveNav();
+    });
+    
     window.addEventListener('resize', () => {
-      if (window.matchMedia('(min-width: 900px)').matches) {
-        sidebar.classList.add('open'); // visible on desktop
-        body.classList.remove('sidebar-open');
-        hamburger.setAttribute('aria-expanded', 'false');
-      } else {
-        sidebar.classList.remove('open');
-        body.classList.remove('sidebar-open');
+      if (window.innerWidth >= 1024) {
+        closeSidebar();
       }
     });
-
-    // Init
-    window.addEventListener('DOMContentLoaded', () => {
-      revealCards();
-      updateActiveNav();
-      if (window.matchMedia('(min-width: 900px)').matches) {
-        sidebar.classList.add('open');
+    
+    // Add some interactive elements
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-8px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+    
+    // Add parallax effect to hero section
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.getElementById('hero');
+      if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
       }
     });
-    document.addEventListener('scroll', () => {
-      revealCards();
-      updateActiveNav();
+    
+    // Add intersection observer for better scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all cards
+    document.querySelectorAll('.card').forEach(card => {
+      observer.observe(card);
     });
   </script>
 </body>
